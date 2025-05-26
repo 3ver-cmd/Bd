@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Lluvia de TE AMO</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #000;
+      font-family: 'Comic Sans MS', cursive;
+      position: relative;
+    }
+
+    .te-amo {
+      position: absolute;
+      color: #ff4da6;
+      font-size: 28px;
+      font-weight: bold;
+      text-shadow: 0 0 8px #ff99cc, 0 0 12px #ff4da6;
+      animation: caer linear infinite;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    @keyframes caer {
+      from {
+        transform: translateY(-50px) rotate(0deg);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .impacto {
+      position: absolute;
+      color: #ff4da6;
+      font-size: 16px;
+      font-weight: bold;
+      animation: explotar 0.8s ease-out forwards;
+      pointer-events: none;
+      text-shadow: 0 0 6px #ff99cc, 0 0 10px #ff4da6;
+    }
+
+    @keyframes explotar {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+
+    .corazon {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #ff4da6;
+      transform: rotate(45deg);
+      animation: flotar 10s infinite;
+      opacity: 0.4;
+    }
+
+    .corazon::before,
+    .corazon::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #ff4da6;
+      border-radius: 50%;
+    }
+
+    .corazon::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .corazon::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes flotar {
+      0% {
+        top: 100vh;
+        opacity: 0.4;
+      }
+      100% {
+        top: -20px;
+        left: calc(100vw * var(--random-x));
+        opacity: 0.1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<script>
+  function crearTeAmo() {
+    const teAmo = document.createElement("div");
+    teAmo.className = "te-amo";
+    teAmo.textContent = "TE AMO";
+    teAmo.style.left = Math.random() * window.innerWidth + "px";
+    teAmo.style.animationDuration = (2 + Math.random() * 2) + "s";
+    document.body.appendChild(teAmo);
+
+    setTimeout(() => teAmo.remove(), 4000);
+  }
+
+  function impacto(x, y) {
+    for (let i = 0; i < 15; i++) {
+      const mini = document.createElement("div");
+      mini.className = "impacto";
+      mini.textContent = "TE AMO";
+      const offsetX = Math.random() * 100 - 50;
+      const offsetY = Math.random() * 100 - 50;
+      mini.style.left = (x + offsetX) + "px";
+      mini.style.top = (y + offsetY) + "px";
+      document.body.appendChild(mini);
+      setTimeout(() => mini.remove(), 800);
+    }
+  }
+
+  function crearCorazon() {
+    const corazon = document.createElement("div");
+    corazon.className = "corazon";
+    corazon.style.left = Math.random() * window.innerWidth + "px";
+    corazon.style.top = "100vh";
+    corazon.style.setProperty('--random-x', Math.random());
+    corazon.style.animationDuration = (8 + Math.random() * 5) + "s";
+    document.body.appendChild(corazon);
+    setTimeout(() => corazon.remove(), 15000);
+  }
+
+  // Lluvia constante de "TE AMO"
+  setInterval(() => {
+    for (let i = 0; i < 3; i++) crearTeAmo();
+  }, 200);
+
+  // Corazones flotando
+  setInterval(() => {
+    crearCorazon();
+  }, 300);
+
+  // Impactos al hacer clic
+  document.addEventListener("click", e => {
+    impacto(e.clientX, e.clientY);
+  });
+</script>
+
+</body>
+</html>
